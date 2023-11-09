@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:Label text="Visual Collider filters" display-tooltip-when-elided="true" name="Header" style="align-self: center; font-size: 16px; color: rgb(0, 177, 255); -unity-font-style: bold;" />
+    <ui:Label text="Change the filters here, keep in mind that the top filters have priorty over the bottom ones, so if a collider would fit in multiple it will only work for the top filter that matches the collider!" display-tooltip-when-elided="true" name="Description" focusable="true" style="align-self: stretch; align-items: auto; width: 100%; white-space: normal; -unity-text-align: upper-center; height: auto;" />
+    <uie:PropertyField name="Filters" binding-path="VisualColliderFilters" label="Filters" focusable="false" style="height: 100%; max-height: 150%;" />
+</ui:UXML>
