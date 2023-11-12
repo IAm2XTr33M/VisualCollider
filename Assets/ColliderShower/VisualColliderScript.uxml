@@ -1,16 +1,19 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <ui:Label tabindex="-1" text="Visual Colliders" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Title" style="-unity-text-align: upper-center; font-size: 16px; -unity-font-style: bold; color: rgb(0, 172, 255); padding-bottom: 15px;" />
     <ui:Label tabindex="-1" text="This script will help visualise colliders in your scene dependant on filters you can customise!" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Description" style="align-self: auto; -unity-text-align: upper-left; white-space: normal;" />
-    <uie:PropertyField name="ScriptableObject" binding-path="scriptableVisualCollider" label="Filter scriptable object" style="padding-top: 5px;" />
-    <ui:Button text="Create a new filter scriptable object" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CreateNew" style="padding-top: 5px; padding-bottom: 5px;" />
+    <uie:PropertyField name="ScriptableObjectReference" binding-path="scriptableVisualCollider" label="Filter scriptable object" tooltip="Select the filter scriptable object that you want to use in your scene" style="padding-top: 5px;" />
+    <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+        <ui:Button text="Create new filters" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CreateNew" tooltip="Create a new filter scriptable object and adds it to your script" style="padding-top: 5px; padding-bottom: 5px; width: 35%; background-color: rgb(155, 197, 154); text-shadow: 0 0 5px rgb(0, 43, 6); color: rgb(0, 0, 0);" />
+        <ui:Button text="Edit the filters" parse-escape-sequences="true" display-tooltip-when-elided="true" name="EditFilters" tooltip="Opens the propperty window of the current selected filter scriptable object to quickly change the values." style="padding-top: 5px; padding-bottom: 5px; width: 65%;" />
+    </ui:VisualElement>
     <ui:Label tabindex="-1" text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SettingsHeader" style="padding-bottom: 2px; padding-top: 15px;" />
-    <ui:Toggle label="Toggle On / Off" name="OnOff" binding-path="Showrenders" />
-    <ui:Toggle label="Extra Refresh" name="Extrarefresh" binding-path="ExtraRefresh" />
-    <ui:Toggle label="Sphere Clip Sizing" name="SphereClipSizing" binding-path="SphereClipSizing" />
-    <ui:EnumField label="Enum" type="VisualColliderScript+VisibilityModes, Assembly-CSharp" binding-path="visibilityMode" name="visibilityMode" />
-    <ui:Vector3Field label="Vec3 Field" name="padding" binding-path="padding" x="0.001" y="0.001" z="0.001" style="padding-bottom: 15px;" />
-    <ui:Button text="Force Refresh" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ForceRefresh" style="padding-top: 4px; padding-bottom: 4px;" />
-    <ui:Foldout text="Extra lists" value="false">
+    <ui:Toggle label="Toggle On / Off" name="OnOff" binding-path="ShowRenders" value="true" tooltip="Toggle the visibility of every visual collider in the scene" />
+    <ui:Toggle label="Extra Refresh" name="Extrarefresh" binding-path="ExtraRefresh" tooltip="Refreshes everything extra for some changes that can not be reqognised by the script. like: mesh collider switching to convex" />
+    <ui:Toggle label="Sphere Clip Sizing" name="SphereClipSizing" binding-path="SphereClipSizing" tooltip="Creates a little padding arround visual sphere colliders that will get rid of the weird clipping between visual collider and mesh renderer." />
+    <ui:EnumField label="Visibility Mode" type="VisualColliderScript+VisibilityModes, Assembly-CSharp" binding-path="visibilityMode" name="visibilityMode" tooltip="Change the visibility mode to always show the visual colliders or to only show them while gizmos are visible." />
+    <ui:Vector3Field label="Padding" name="padding" binding-path="padding" x="0.001" y="0.001" z="0.001" tooltip="Adds some padding to the outside of the cube and sphere meshes." style="padding-bottom: 15px;" />
+    <ui:Button text="Force Refresh" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ForceRefresh" tooltip="Able to manually force refresh the script if stuff is not loading correctly" style="padding-top: 4px; padding-bottom: 4px;" />
+    <ui:Foldout text="Extra lists" value="false" tooltip="Some extra variables in the case you want to see everything you are rendering">
         <uie:PropertyField binding-path="AllCollidersInScene" name="AllCollidersInScene" />
         <uie:PropertyField binding-path="visualColliderFilters" name="visualColliderFilters" />
         <uie:PropertyField binding-path="objectsToRender" name="objectsToRender" />

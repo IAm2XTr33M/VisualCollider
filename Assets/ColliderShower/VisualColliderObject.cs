@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,3 +15,4 @@ public class VisualColliderObject
     public bool isMeshCol = false;
     public bool isConvex = false;
 }
+#endif

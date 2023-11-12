@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using VC_ConvecHullCalculator;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,15 +16,15 @@ public class VisualColliderScript : MonoBehaviour
 
 
     [Header("Settings")]  
-    [SerializeField] bool ShowRenders = true;
-    public bool ManualForceRefresh = false ; 
-    [SerializeField] bool ExtraRefresh = false;
-    [SerializeField] bool SphereClipSizing = false;
+    public bool ShowRenders = true;
+    public bool ManualForceRefresh = false ;
+    public bool ExtraRefresh = false;
+    public bool SphereClipSizing = false; 
     public enum VisibilityModes { AlwaysVisible, OnGizmos }
-    [SerializeField] VisibilityModes visibilityMode = VisibilityModes.AlwaysVisible;
+    public VisibilityModes visibilityMode = VisibilityModes.AlwaysVisible;
 
     [Min(0.0001f)]
-    [SerializeField] Vector3 padding = new Vector3(0.001f, 0.001f, 0.001f);
+    public Vector3 padding = new Vector3(0.001f, 0.001f, 0.001f);
 
     [SerializeField] List<Collider> AllCollidersInScene = new List<Collider>();
 
@@ -38,6 +39,8 @@ public class VisualColliderScript : MonoBehaviour
 
     bool first = true;
     bool canshow = false;
+
+    string path;
 
     #region variable changef / On Enable-Disable / hierachy changed
 
@@ -114,38 +117,6 @@ public class VisualColliderScript : MonoBehaviour
             canshow = true; 
         }
 
-        if (createNewScriptable)  
-        {
-            createNewScriptable = false;
-
-            var guid = AssetDatabase.FindAssets($"t:Script {nameof(VisualColliderScript)}");
-            string path = AssetDatabase.GUIDToAssetPath(guid[0]);
-            path = Path.GetDirectoryName(path);
-
-            if (!AssetDatabase.IsValidFolder(path + "/Filters"))
-            {
-                AssetDatabase.CreateFolder(path, "Filters");
-            }
-
-            string[] folder = { path + "/Filters" };
-            guid = AssetDatabase.FindAssets("ScriptableVCFilter", folder);
-
-            path = path + "/Filters/ScriptableVCFilter" + guid.Length.ToString()+".asset";
-
-            ScriptableVisualCollider svc = ScriptableVisualCollider.CreateInstance<ScriptableVisualCollider>();
-
-            AssetDatabase.CreateAsset(svc, path);
-
-            UnityEngine.Object asset = AssetDatabase.LoadAssetAtPath(path, typeof(UnityEngine.Object));
-            Debug.Log(asset);
-            Debug.Log(path + "/Filters/ScriptableVCFilter" + guid.Length.ToString() + ".asset");
-            
-            EditorUtility.OpenPropertyEditor(asset);
-
-            scriptableVisualCollider = svc;
-        }
-
-
         CheckScriptableObjectChanged();
 
         if(!canshow && visibilityMode == VisibilityModes.AlwaysVisible)
@@ -162,6 +133,40 @@ public class VisualColliderScript : MonoBehaviour
 
         RenderMeshes();
     }
+
+    public void CreateNewScriptable()
+    {
+        var guid = AssetDatabase.FindAssets($"t:Script {nameof(VisualColliderScript)}");
+        path = AssetDatabase.GUIDToAssetPath(guid[0]);
+        path = Path.GetDirectoryName(path);
+
+        if (!AssetDatabase.IsValidFolder(path + "/Filters"))
+        { 
+            AssetDatabase.CreateFolder(path, "Filters");
+        }
+
+        string[] folder = { path + "/Filters" };
+        guid = AssetDatabase.FindAssets("ScriptableVCFilter", folder);
+
+        path = path + "/Filters/ScriptableVCFilter" + guid.Length.ToString() + ".asset";
+
+        ScriptableVisualCollider svc = ScriptableVisualCollider.CreateInstance<ScriptableVisualCollider>();
+
+        AssetDatabase.CreateAsset(svc, path);
+
+        scriptableVisualCollider = svc;
+         
+        EditorUtility.OpenPropertyEditor(scriptableVisualCollider); 
+    }
+     
+    public void EditFilters()  
+    {
+        if(scriptableVisualCollider != null) 
+        {
+            EditorUtility.OpenPropertyEditor(scriptableVisualCollider);
+        }
+    }
+
     void Clear()
     {
         AllCollidersInScene = GetCollidersInScene();
@@ -363,6 +368,20 @@ public class VisualColliderScript : MonoBehaviour
                                 {
                                     if (allPrefabs.Contains(objectsToRender[i].gameobject))
                                     {
+                                        //foreachobj
+                                        for (int j = 0; j < objectsToRender.Count; j++)
+                                        {
+                                            if (!filteredObjects.Contains(objectsToRender[j]) && collidersToRender[j] != null && collidersToRender[i] != null)
+                                            {
+                                                if (collidersToRender[j].transform.IsChildOf(collidersToRender[i].transform))
+                                                {
+                                                    objectsToRender[j].filterLayer = filterIndex;
+                                                    filteredObjects.Add(objectsToRender[j]);
+                                                }
+                                            }
+                                        }
+
+
                                         objectsToRender[i].filterLayer = filterIndex;
                                         filteredObjects.Add(objectsToRender[i]);
                                     }
@@ -531,4 +550,4 @@ public class VisualColliderScript : MonoBehaviour
     }
  
 }
-
+#endif

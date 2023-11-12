@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 using UnityEditor.UIElements;
@@ -25,3 +26,4 @@ public class VisualColliderFilter_Inspector : Editor
     }
 
 }
+#endif

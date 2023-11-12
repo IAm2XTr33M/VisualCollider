@@ -1,8 +1,7 @@
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
-using UnityEditor.UIElements;
 using UnityEngine.UIElements;
-using Unity.VisualScripting;
 
 [CustomEditor(typeof(VisualColliderScript))]
 public class VisualColliderScript_Inspector : Editor
@@ -20,6 +19,19 @@ public class VisualColliderScript_Inspector : Editor
 
         visualTree.CloneTree(myInspector);
 
+        Vector3Field vector3Field = myInspector.Q<Vector3Field>("padding");
+         
+        vector3Field.RegisterValueChangedCallback(evt =>
+        {
+            Vector3 newValue = evt.newValue;
+            newValue.x = Mathf.Max(newValue.x, 0.001f);
+            newValue.y = Mathf.Max(newValue.y, 0.001f);
+            newValue.z = Mathf.Max(newValue.z, 0.001f);
+
+            vector3Field.value = newValue;
+            _target.padding = newValue;
+        });
+
         HandleButtons(myInspector);
 
         return myInspector;
@@ -30,13 +42,21 @@ public class VisualColliderScript_Inspector : Editor
         Button createNewbut = myInspector.Q<Button>("CreateNew");
         createNewbut.clicked += CreateNew;
 
+        Button editfiltersBut = myInspector.Q<Button>("EditFilters");
+        editfiltersBut.clicked += EditFilters;
+
         Button forcerefreshBut = myInspector.Q<Button>("ForceRefresh");
         forcerefreshBut.clicked += ForceRefresh;
     }
 
     void CreateNew()
     {
-        _target.createNewScriptable = true;
+        _target.CreateNewScriptable();
+    }
+
+    void EditFilters()
+    {
+        _target.EditFilters();
     }
 
     void ForceRefresh()
@@ -44,3 +64,4 @@ public class VisualColliderScript_Inspector : Editor
         _target.ManualForceRefresh = true;
     }
 }
+#endif
