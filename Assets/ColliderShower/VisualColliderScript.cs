@@ -108,6 +108,7 @@ public class VisualColliderScript : MonoBehaviour
     #endregion
     private void Update()
     {
+
         if (visibilityMode == VisibilityModes.OnGizmos)
         {
             canshow = SceneView.lastActiveSceneView.drawGizmos;
@@ -453,7 +454,7 @@ public class VisualColliderScript : MonoBehaviour
                         Collider col = collidersToRender[i];
                         if (col.GetType() == typeof(MeshCollider))
                         {
-                            if (objectsToRender[i].gameobject != null)
+                            if (objectsToRender[i].gameobject != null && objectsToRender[i].mesh != null)
                             {
                                 Transform objTransform = objectsToRender[i].gameobject.transform;
                                 Graphics.RenderMesh(rp, objectsToRender[i].mesh, 0, Matrix4x4.TRS(objTransform.position, objTransform.rotation, objTransform.localScale));
@@ -461,7 +462,7 @@ public class VisualColliderScript : MonoBehaviour
                         }
                         else if (col.GetType() == typeof(BoxCollider))
                         {
-                            if (objectsToRender[i].gameobject != null)
+                            if (objectsToRender[i].gameobject != null && col != null)
                             {
                                 Transform objTransform = objectsToRender[i].gameobject.transform;
                                 Graphics.RenderMesh(rp, objectsToRender[i].mesh, 0, Matrix4x4.TRS(col.bounds.center, objTransform.rotation, objTransform.localScale + padding));
