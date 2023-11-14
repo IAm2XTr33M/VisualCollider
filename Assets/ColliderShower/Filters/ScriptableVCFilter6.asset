@@ -13,5 +13,22 @@ MonoBehaviour:
   m_Name: ScriptableVCFilter6
   m_EditorClassIdentifier: 
   TransParentMaterial: {fileID: 0}
-  VisualColliderFilters: []
-  changed: 0
+  VisualColliderFilters:
+  - filterMode: 4
+    layer:
+      serializedVersion: 2
+      m_Bits: 0
+    tag: 
+    mesh: {fileID: 0}
+    prefab: {fileID: 0}
+    name: umbrel
+    nameMode: 0
+    CapitalSensitive: 0
+    positionMode: 0
+    positionAxis: 0
+    position: 0
+    positionInbetween: {x: 0, y: 0}
+    materialColor: {r: 1, g: 1, b: 1, a: 1}
+    exclude: 0
+    isActive: 1
+  changed: 1

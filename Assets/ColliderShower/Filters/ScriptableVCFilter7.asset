@@ -13,5 +13,22 @@ MonoBehaviour:
   m_Name: ScriptableVCFilter7
   m_EditorClassIdentifier: 
   TransParentMaterial: {fileID: 0}
-  VisualColliderFilters: []
+  VisualColliderFilters:
+  - filterMode: 0
+    layer:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    tag: 
+    mesh: {fileID: 0}
+    prefab: {fileID: 0}
+    name: 
+    nameMode: 0
+    CapitalSensitive: 0
+    positionMode: 0
+    positionAxis: 0
+    position: 0
+    positionInbetween: {x: 0, y: 0}
+    materialColor: {r: 1, g: 1, b: 1, a: 1}
+    exclude: 0
+    isActive: 1
   changed: 0

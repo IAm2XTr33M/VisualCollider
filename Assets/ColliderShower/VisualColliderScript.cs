@@ -54,6 +54,7 @@ public class VisualColliderScript : MonoBehaviour
         transparent_material = AssetDatabase.LoadAssetAtPath<Material>(materialPath);
 
         EditorApplication.hierarchyChanged += OnHierarchyChanged;
+
         cubeMesh = Resources.GetBuiltinResource<Mesh>("Cube.fbx");
         sphereMesh = Resources.GetBuiltinResource<Mesh>("Sphere.fbx");
         planeMesh = Resources.GetBuiltinResource<Mesh>("Plane.fbx");
@@ -193,7 +194,7 @@ public class VisualColliderScript : MonoBehaviour
 
         for (int i = 0; i < collidersToRender.Count; i++)
         {
-            if (collidersToRender[i] != null)
+            if (collidersToRender[i] != null && objectsToRender[i] != null)
             {
                 if (objectsToRender[i].isMeshCol)
                 {
@@ -209,7 +210,7 @@ public class VisualColliderScript : MonoBehaviour
             {
                 //Remove object if collider is gone from scene
                 objectsToRender.RemoveAt(i);
-                collidersToRender.Remove(collidersToRender[i]);
+                collidersToRender.RemoveAt(i);
             }
         }
 
@@ -218,21 +219,24 @@ public class VisualColliderScript : MonoBehaviour
         {
             if (!collidersToRender.Contains(col))
             {
-                collidersToRender.Add(col);
 
                 VisualColliderObject newObject = new VisualColliderObject();
                 newObject.gameobject = col.gameObject;
                 newObject.mesh = GetMesh(col);
-                if (col.GetType() == typeof(MeshCollider))
+                if (newObject.mesh.isReadable)
                 {
-                    newObject.isMeshCol = true;
-                    if ((col as MeshCollider).convex)
+                    if (col.GetType() == typeof(MeshCollider))
                     {
-                        newObject.isConvex = true;
+                        newObject.isMeshCol = true;
+                        if ((col as MeshCollider).convex)
+                        {
+                            newObject.isConvex = true;
+                        }
                     }
-                }
 
-                objectsToRender.Add(newObject);
+                    collidersToRender.Add(col);
+                    objectsToRender.Add(newObject);
+                }
             }
         }
 
@@ -522,6 +526,7 @@ public class VisualColliderScript : MonoBehaviour
                 var points = GetMeshVertices(meshCol.sharedMesh);
 
                 calc.GenerateHull(points, true, ref verts, ref tris, ref normals);
+
 
                 var mesh = new Mesh();
                 mesh.SetVertices(verts);

@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TransParentMaterial: {fileID: 0}
   VisualColliderFilters:
-  - filterMode: 2
+  - filterMode: 0
     layer:
       serializedVersion: 2
       m_Bits: 0
     tag: 
-    mesh: {fileID: 4325882, guid: f80b9a82cf103fc46a271d8c08ba22c0, type: 3}
+    mesh: {fileID: 0}
     prefab: {fileID: 0}
     name: 
     nameMode: 0
@@ -28,24 +28,7 @@ MonoBehaviour:
     positionAxis: 0
     position: 0
     positionInbetween: {x: 0, y: 0}
-    materialColor: {r: 1, g: 0, b: 0, a: 0.21176471}
-    exclude: 1
-    isActive: 1
-  - filterMode: 0
-    layer:
-      serializedVersion: 2
-      m_Bits: 4294967295
-    tag: 
-    mesh: {fileID: 4325882, guid: f80b9a82cf103fc46a271d8c08ba22c0, type: 3}
-    prefab: {fileID: 0}
-    name: 
-    nameMode: 0
-    CapitalSensitive: 0
-    positionMode: 0
-    positionAxis: 0
-    position: 0
-    positionInbetween: {x: 0, y: 0}
-    materialColor: {r: 0, g: 1, b: 0.015290737, a: 1}
+    materialColor: {r: 1, g: 1, b: 1, a: 1}
     exclude: 0
     isActive: 1
-  changed: 0
+  changed: 1
