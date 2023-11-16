@@ -17,12 +17,13 @@ public class VisualColliderScript : MonoBehaviour
 
     [Header("Settings")]  
     public bool ShowRenders = true;
+    public bool ConvexVisualisation = false;
     public bool ManualForceRefresh = false ;
     public bool ExtraRefresh = false;
     public bool SphereClipSizing = false; 
     public enum VisibilityModes { AlwaysVisible, OnGizmos }
     public VisibilityModes visibilityMode = VisibilityModes.AlwaysVisible;
-
+     
     [Min(0.0001f)]
     public Vector3 padding = new Vector3(0.001f, 0.001f, 0.001f);
 
@@ -31,7 +32,9 @@ public class VisualColliderScript : MonoBehaviour
     [SerializeField] List<VisualColliderFilter> visualColliderFilters = new List<VisualColliderFilter>();
 
     [SerializeField] List<VisualColliderObject> objectsToRender = new List<VisualColliderObject>();
-    [SerializeField] List<Collider> collidersToRender = new List<Collider>(); 
+    [SerializeField] List<Collider> collidersToRender = new List<Collider>();
+
+    [SerializeField] List<MeshCollider> notifiedMeshColliders = new List<MeshCollider>();
 
     Mesh cubeMesh;
     Mesh sphereMesh;
@@ -223,20 +226,18 @@ public class VisualColliderScript : MonoBehaviour
                 VisualColliderObject newObject = new VisualColliderObject();
                 newObject.gameobject = col.gameObject;
                 newObject.mesh = GetMesh(col);
-                if (newObject.mesh.isReadable)
-                {
-                    if (col.GetType() == typeof(MeshCollider))
-                    {
-                        newObject.isMeshCol = true;
-                        if ((col as MeshCollider).convex)
-                        {
-                            newObject.isConvex = true;
-                        }
-                    }
 
-                    collidersToRender.Add(col);
-                    objectsToRender.Add(newObject);
+                if (col.GetType() == typeof(MeshCollider))
+                {
+                    newObject.isMeshCol = true;
+                    if ((col as MeshCollider).convex)
+                    {
+                        newObject.isConvex = true;
+                    }
                 }
+
+                collidersToRender.Add(col);
+                objectsToRender.Add(newObject);
             }
         }
 
@@ -517,8 +518,14 @@ public class VisualColliderScript : MonoBehaviour
         if (col.GetType() == typeof(MeshCollider))
         {
             MeshCollider meshCol = col.gameObject.GetComponent<MeshCollider>();
-            if (meshCol.convex)
+            if (meshCol.convex && ConvexVisualisation)
             {
+                if (!meshCol.sharedMesh.isReadable)
+                {
+                    var guid = AssetDatabase.FindAssets(meshCol.sharedMesh.name);
+                    SetFBXIsReadable(AssetDatabase.GUIDToAssetPath(guid[0]));
+                }
+
                 var calc = new VisualCollider_ConvexHullCalculator();
                 var verts = new List<Vector3>();
                 var tris = new List<int>();
@@ -526,7 +533,6 @@ public class VisualColliderScript : MonoBehaviour
                 var points = GetMeshVertices(meshCol.sharedMesh);
 
                 calc.GenerateHull(points, true, ref verts, ref tris, ref normals);
-
 
                 var mesh = new Mesh();
                 mesh.SetVertices(verts);
@@ -537,6 +543,14 @@ public class VisualColliderScript : MonoBehaviour
             }
             else
             {
+                if(meshCol.convex && !meshCol.sharedMesh.isReadable && ConvexVisualisation && !notifiedMeshColliders.Contains(meshCol))
+                {
+
+                    Debug.Log("Sorry but the Mesh " + meshCol.sharedMesh.name + " on " + meshCol.gameObject.name + " is not readable, " +
+                        "Its impossible to visualise convex meshes if the mesh.isReadable is false on import, Please turn off the convex " +
+                        "visualisation or use a readable mesh!   (Instead I visualised the collider as if it werent convex)");
+                    notifiedMeshColliders.Add(meshCol);
+                }
                 return meshCol.sharedMesh;
             }
         }
@@ -554,6 +568,17 @@ public class VisualColliderScript : MonoBehaviour
         }
         return cubeMesh; 
     }
- 
+
+    public static void SetFBXIsReadable(string filePath)
+    {
+        ModelImporter modelImporter = AssetImporter.GetAtPath(filePath) as ModelImporter;
+
+        if (modelImporter != null)
+        {
+            modelImporter.isReadable = true;
+
+            AssetDatabase.ImportAsset(filePath, ImportAssetOptions.ForceUpdate);
+        }
+    }
 }
 #endif

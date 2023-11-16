@@ -8,6 +8,7 @@
     </ui:VisualElement>
     <ui:Label tabindex="-1" text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SettingsHeader" style="padding-bottom: 2px; padding-top: 15px;" />
     <ui:Toggle label="Toggle On / Off" name="OnOff" binding-path="ShowRenders" value="true" tooltip="Toggle the visibility of every visual collider in the scene" />
+    <ui:Toggle label="Convex Visualisation" name="Convexrendering" binding-path="ConvexVisualisation" value="true" tooltip="Toggle if convex mesh colliders should be shown as convex meshes" />
     <ui:Toggle label="Extra Refresh" name="Extrarefresh" binding-path="ExtraRefresh" tooltip="Refreshes everything extra for some changes that can not be reqognised by the script. like: mesh collider switching to convex" />
     <ui:Toggle label="Sphere Clip Sizing" name="SphereClipSizing" binding-path="SphereClipSizing" tooltip="Creates a little padding arround visual sphere colliders that will get rid of the weird clipping between visual collider and mesh renderer." />
     <ui:EnumField label="Visibility Mode" type="VisualColliderScript+VisibilityModes, Assembly-CSharp" binding-path="visibilityMode" name="visibilityMode" tooltip="Change the visibility mode to always show the visual colliders or to only show them while gizmos are visible." />
@@ -18,5 +19,6 @@
         <uie:PropertyField binding-path="visualColliderFilters" name="visualColliderFilters" />
         <uie:PropertyField binding-path="objectsToRender" name="objectsToRender" />
         <uie:PropertyField binding-path="collidersToRender" name="collidersToRender" />
+        <uie:PropertyField binding-path="notifiedMeshColliders" name="notifiedMeshColliders" />
     </ui:Foldout>
 </ui:UXML>
