@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59bbcf068c6aa994780ba4093223d398, type: 3}
+  m_Name: ScriptableVCFilter0
+  m_EditorClassIdentifier: 
+  TransParentMaterial: {fileID: 0}
+  VisualColliderFilters:
+  - filterMode: 4
+    layer:
+      serializedVersion: 2
+      m_Bits: 0
+    tag: 
+    mesh: {fileID: 0}
+    prefab: {fileID: 0}
+    name: Sea
+    nameMode: 0
+    CapitalSensitive: 0
+    positionMode: 0
+    positionAxis: 0
+    position: 0
+    positionInbetween: {x: 0, y: 0}
+    materialColor: {r: 1, g: 1, b: 1, a: 1}
+    exclude: 0
+    isActive: 1
+  - filterMode: 4
+    layer:
+      serializedVersion: 2
+      m_Bits: 0
+    tag: 
+    mesh: {fileID: 0}
+    prefab: {fileID: 0}
+    name: Barrel
+    nameMode: 0
+    CapitalSensitive: 0
+    positionMode: 0
+    positionAxis: 0
+    position: 0
+    positionInbetween: {x: 0, y: 0}
+    materialColor: {r: 1, g: 0, b: 0, a: 1}
+    exclude: 0
+    isActive: 1
+  - filterMode: 4
+    layer:
+      serializedVersion: 2
+      m_Bits: 0
+    tag: 
+    mesh: {fileID: 0}
+    prefab: {fileID: 0}
+    name: Island
+    nameMode: 0
+    CapitalSensitive: 0
+    positionMode: 0
+    positionAxis: 0
+    position: 0
+    positionInbetween: {x: 0, y: 0}
+    materialColor: {r: 0, g: 0.3584906, b: 0.098334774, a: 1}
+    exclude: 0
+    isActive: 1
+  - filterMode: 2
+    layer:
+      serializedVersion: 2
+      m_Bits: 0
+    tag: 
+    mesh: {fileID: -746172738922699959, guid: 92f4be17233cddb409e8c73c4bfee43c, type: 3}
+    prefab: {fileID: 0}
+    name: Island
+    nameMode: 0
+    CapitalSensitive: 0
+    positionMode: 0
+    positionAxis: 0
+    position: 0
+    positionInbetween: {x: 0, y: 0}
+    materialColor: {r: 0, g: 1, b: 0.9720595, a: 1}
+    exclude: 0
+    isActive: 1
+  - filterMode: 5
+    layer:
+      serializedVersion: 2
+      m_Bits: 0
+    tag: 
+    mesh: {fileID: -746172738922699959, guid: 92f4be17233cddb409e8c73c4bfee43c, type: 3}
+    prefab: {fileID: 0}
+    name: Island
+    nameMode: 0
+    CapitalSensitive: 0
+    positionMode: 1
+    positionAxis: 0
+    position: 39.52
+    positionInbetween: {x: 0, y: 0}
+    materialColor: {r: 0.15395403, g: 0, b: 1, a: 1}
+    exclude: 0
+    isActive: 1
+  - filterMode: 0
+    layer:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    tag: 
+    mesh: {fileID: -746172738922699959, guid: 92f4be17233cddb409e8c73c4bfee43c, type: 3}
+    prefab: {fileID: 0}
+    name: Island
+    nameMode: 0
+    CapitalSensitive: 0
+    positionMode: 1
+    positionAxis: 0
+    position: 39.52
+    positionInbetween: {x: 0, y: 0}
+    materialColor: {r: 1, g: 0, b: 0.83183765, a: 1}
+    exclude: 0
+    isActive: 1
+  changed: 0

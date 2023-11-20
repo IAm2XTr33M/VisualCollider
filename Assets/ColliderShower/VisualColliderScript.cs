@@ -470,7 +470,7 @@ public class VisualColliderScript : MonoBehaviour
                             if (objectsToRender[i].gameobject != null && col != null)
                             {
                                 Transform objTransform = objectsToRender[i].gameobject.transform;
-                                Graphics.RenderMesh(rp, objectsToRender[i].mesh, 0, Matrix4x4.TRS(col.bounds.center, objTransform.rotation, objTransform.localScale + padding));
+                                Graphics.RenderMesh(rp, objectsToRender[i].mesh, 0, Matrix4x4.TRS(col.bounds.center, objTransform.rotation, col.bounds.size + padding));
                             }
                         }
                         else if (col.GetType() == typeof(SphereCollider))
@@ -482,12 +482,12 @@ public class VisualColliderScript : MonoBehaviour
                                 if (SphereClipSizing)
                                 {
                                     Graphics.RenderMesh(rp, objectsToRender[i].mesh, 0, Matrix4x4.TRS(
-                                        col.bounds.center, objTransform.rotation, objTransform.localScale / 2f + objTransform.localScale * 0.0065f + padding));
+                                        col.bounds.center, objTransform.rotation, col.bounds.size / 2f + col.bounds.size * 0.0065f + padding));
                                 }
                                 else
                                 {
                                     Graphics.RenderMesh(rp, objectsToRender[i].mesh, 0, Matrix4x4.TRS(
-                                        col.bounds.center, objTransform.rotation, objTransform.localScale / 2f + padding));
+                                        col.bounds.center, objTransform.rotation, col.bounds.size / 2f + padding));
                                 }
                             }
                         }
